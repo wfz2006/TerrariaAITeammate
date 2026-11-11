@@ -193,8 +193,8 @@ public partial class AITeammateSystem
             LastReply = "我先核对现场，再继续原任务。";
             RefreshGoalCheckpoint();
         }
-        Main.NewText("小星：" + LastReply, Color.LightBlue);
-        Memory.Add("小星：" + LastReply);
+        Main.NewText(CompanionSpeech(LastReply), Color.LightBlue);
+        Memory.Add(CompanionSpeech(LastReply));
         return true;
     }
 }

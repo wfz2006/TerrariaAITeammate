@@ -115,7 +115,8 @@ public class CompanionInventoryUI
         spriteBatch.Draw(pixel, panelRect, new Color(18, 24, 40) * 0.96f);
         DrawBorder(spriteBatch, panelRect, new Color(90, 140, 210) * 0.9f, 2);
 
-        Utils.DrawBorderString(spriteBatch, "小星的背包", new Vector2(panelRect.X + Padding, panelRect.Y + 5), Color.White, 0.95f);
+        Utils.DrawBorderString(spriteBatch, CompanionControlsUI.Text("InventoryTitle", AITeammateSystem.CompanionDisplayName),
+            new Vector2(panelRect.X + Padding, panelRect.Y + 5), Color.White, 0.95f);
         Utils.DrawBorderString(spriteBatch, "×", new Vector2(closeRect.X + 5, closeRect.Y - 2), Color.IndianRed, 1f);
 
         string[] equipmentLabels = { "头", "身", "腿", "饰", "饰", "饰" };
@@ -233,7 +234,7 @@ public class CompanionInventoryUI
 
         if (!Loadout.AddItem(Main.mouseItem.type, Main.mouseItem.stack))
         {
-            Main.NewText("小星：背包满了。", Color.OrangeRed);
+            Main.NewText(AITeammateSystem.CompanionSpeech("背包满了。"), Color.OrangeRed);
             return;
         }
 

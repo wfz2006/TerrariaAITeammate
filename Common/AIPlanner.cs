@@ -89,6 +89,7 @@ public class AIPlanner
             },
             companion = new
             {
+                name = AITeammateSystem.CompanionDisplayName,
                 summoned = executor.HasCompanion,
                 hp = executor.CompanionHp,
                 x = focusX,
@@ -266,7 +267,7 @@ public class AIPlanner
         CancellationToken cancellationToken = default, Action<LlmUsage>? onUsage = null)
     {
         const string CombatSystem = """
-你是泰拉瑞亚 AI 队友“小星”的战斗指挥。你要根据实时状态做一个即时决定，代码会负责执行。
+你是泰拉瑞亚 AI 队友的战斗指挥。你要根据实时状态做一个即时决定，代码会负责执行。
 只输出一个 JSON 对象，不要 markdown，不要代码块，不要聊天，不要任务队列。
 格式：
 {"action":"fight|switch|use|retreat","weapon":"武器名，可空","item":"药水名，可空","reason":"不超过12字"}

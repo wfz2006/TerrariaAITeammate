@@ -8,6 +8,10 @@ public class AIConfig : ModConfig
 {
     public override ConfigScope Mode => ConfigScope.ClientSide;
 
+    [Header("CompanionProfile")]
+    [DefaultValue(CompanionIdentity.DefaultName)]
+    public string CompanionName { get; set; } = CompanionIdentity.DefaultName;
+
     [Header("ModelConnection")]
     [DefaultValue(true)]
     public bool UseLlm { get; set; } = true;
@@ -70,9 +74,14 @@ public class AIConfig : ModConfig
 
     public override void OnChanged()
     {
+        CompanionName = CompanionIdentity.NormalizeName(CompanionName);
         LlmSettings? previous = appliedSettings;
         appliedSettings = UseLlm ? CreateSettings(ApiKey ?? "", BaseUrl ?? "", Model ?? "") : null;
         if (!Main.dedServ && !Main.gameMenu)
-            AITeammateSystem.Instance.OnModelConfigChanged(previous != appliedSettings, UseCombatLlm);
+        {
+            var system = AITeammateSystem.Instance;
+            system.RefreshCompanionName(CompanionName);
+            system.OnModelConfigChanged(previous != appliedSettings, UseCombatLlm);
+        }
     }
 }

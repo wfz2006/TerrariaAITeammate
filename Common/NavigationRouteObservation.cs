@@ -138,7 +138,7 @@ public static class NavigationRouteObservation
             diagnostic = sample.Diagnostic,
             travelExecuted = false, worldModified = false,
             scope = "current_bounded_search_and_resolved_stands_only",
-            note = "站位存在不等于有路；pathFound只在searchStatus=found且本轮有完整路径时为真，未执行行走。searching/budget_exhausted只是有界工作尚未证明路线，不能当作无路；frontier_exhausted也只限报告的bounds。搜索框是解析后两端的包络加横64/纵48格padding并裁到世界，远目标不因距离被拒绝。sameProjectedStand只表示两端投影相同；alreadyAtResolvedStand须实际脚底、接地、竖速及水平位置均满足站位到达条件，arrivalEvidence=unknown不能当到达。actualDistanceToTarget与withinMiningDistanceByDistanceOnly从小星本轮真实中心actualStart算到请求目标；resolvedStandToTarget与resolvedStandWithinMiningDistanceByDistanceOnly仅描述候选端点到目标，goalSnapDistanceTiles是后者的兼容字段，不代表小星已经在候选工位。距离在5.5格内也不等于已验证工具、视线、材料保护或开采成功。未找到当前图路径不代表整片区域永久不可达；可由你观察地形、显式挖自然块、放置支撑或另选来源后重新查询。"
+            note = "站位存在不等于有路；pathFound只在searchStatus=found且本轮有完整路径时为真，未执行行走。searching/budget_exhausted只是有界工作尚未证明路线，不能当作无路；frontier_exhausted也只限报告的bounds。搜索框是解析后两端的包络加横64/纵48格padding并裁到世界，远目标不因距离被拒绝。sameProjectedStand只表示两端投影相同；alreadyAtResolvedStand须实际脚底、接地、竖速及水平位置均满足站位到达条件，arrivalEvidence=unknown不能当到达。actualDistanceToTarget与withinMiningDistanceByDistanceOnly从队友本轮真实中心actualStart算到请求目标；resolvedStandToTarget与resolvedStandWithinMiningDistanceByDistanceOnly仅描述候选端点到目标，goalSnapDistanceTiles是后者的兼容字段，不代表队友已经在候选工位。距离在5.5格内也不等于已验证工具、视线、材料保护或开采成功。未找到当前图路径不代表整片区域永久不可达；可由你观察地形、显式挖自然块、放置支撑或另选来源后重新查询。"
         };
     }
     internal static object DescribeFrontier(ObservedRouteStand stand, float requestedX, float requestedY) => new

@@ -1,11 +1,13 @@
-NPCs.AICompanion.DisplayName: A I Companion
+NPCs.AICompanion.DisplayName: 小鲸鱼
 Projectiles.AIBolt.DisplayName: A I Bolt
-Keybinds.CompanionPanel.DisplayName: Open Xiaoxing's panel
+Keybinds.CompanionPanel.DisplayName: Open teammate panel
 
 Controls: {
-	Title: Xiaoxing
+	Title: "{0}"
 	Close: ×
 	Inventory: Inventory
+	InventoryTitle: "{0}'s inventory"
+	InventorySwitched: "Toggled {0}'s inventory."
 	Settings: Settings
 	BasicCommands: Local commands
 	Summon: Summon
@@ -20,16 +22,18 @@ Controls: {
 	ModelUnconfigured: API key needed
 	ModelConfigured: LLM configured
 	PanelStatus: "{0}  ·  {1}"
-	AlreadyPresent: Xiaoxing is already here.
-	JoinTip: "Click Xiaoxing in the lower-right corner, press {0}, or use /ai panel."
-	JoinTipUnbound: "Click Xiaoxing in the lower-right corner or use /ai panel."
-	ChatSent: "You → Xiaoxing: {0}"
-	ChatUsage: "Type @Xiaoxing or /ai followed by your message in game chat. Messages can be up to 300 characters."
-	ChatDispatchError: "Xiaoxing could not read that message. Please try again."
+	AlreadyPresent: "{0} is already here."
+	Summoned: "{0} is here."
+	Fallen: "{0} fell."
+	JoinTip: "Click {0} in the lower-right corner, press {1}, or use /ai panel."
+	JoinTipUnbound: "Click {0} in the lower-right corner or use /ai panel."
+	ChatSent: "You → {0}: {1}"
+	ChatUsage: "Type @{0} or /ai followed by your message in game chat. Messages can be up to 300 characters."
+	ChatDispatchError: "{0} could not read that message. Please try again."
 	CommandUsage: "/ai panel | settings | spawn | follow | come | stop | attack [target] | pickup [item] [count] | equip <item> | inventory | status | auto on/off | diagnostics | bug [description] | /ai <message>"
 	MissingKey: "An API key is needed for LLM chat. Open /ai settings to add one. Follow, come and stop still work."
 	ModelDisabled: "LLM chat is off. Enable it in /ai settings for natural language. Follow, come and stop still work."
-	Thinking: "Xiaoxing is thinking…"
+	Thinking: "{0} is thinking…"
 	SettingsChanged: "LLM settings changed. Please resend the message that was being processed."
 	Diagnostics: Test diagnostics
 	DiagnosticsStatus: "{0}  ·  {1} events this launch"
@@ -50,18 +54,24 @@ Controls: {
 
 Configs: {
 	AIConfig: {
-		DisplayName: Xiaoxing Settings
+		DisplayName: AI Teammate Settings
 
 		Headers: {
+			CompanionProfile: Teammate
 			ModelConnection: Model connection
 			Interaction: Chat and combat
 			ModelParameters: Model parameters
 			AssistanceAndDebug: Assistance and debugging
 		}
 
+		CompanionName: {
+			Label: Teammate name
+			Tooltip: "Updates the name in the world, panel, and chat after saving. Up to 16 characters. Default is 小鲸鱼."
+		}
+
 		ChatMode: {
 			Label: Chat routing
-			Tooltip: "Choose which game chat messages go to Xiaoxing."
+			Tooltip: "Choose which game chat messages go to your teammate."
 		}
 
 		ApiKey: {
@@ -121,12 +131,12 @@ Configs: {
 
 		AllowTeleportRecovery: {
 			Label: Teleport when stuck
-			Tooltip: "Allow Xiaoxing to teleport when stuck. Off by default."
+			Tooltip: "Allow the teammate to teleport when stuck. Off by default."
 		}
 
 		AllowBlueprintWorldEditing: {
 			Label: Allow direct blueprint edits
-			Tooltip: "Allow saved blueprints to clear regions and restore tiles with materials from Xiaoxing's inventory."
+			Tooltip: "Allow saved blueprints to clear regions and restore tiles with materials from the teammate's inventory."
 		}
 	}
 
@@ -135,7 +145,7 @@ Configs: {
 
 		Addressed: {
 			Label: Addressed messages
-			Tooltip: "@Xiaoxing messages, exact local shortcuts and a pending goal's resume shortcut."
+			Tooltip: "Messages addressed to your teammate, exact local shortcuts, and the resume shortcut for a pending goal."
 		}
 
 		CommandsOnly: {

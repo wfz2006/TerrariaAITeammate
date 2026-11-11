@@ -27,7 +27,7 @@ public sealed record ConstructionSiteRequest(int X, int Y, int Width, int Height
         double nx = Math.Clamp(observerTileX, X, right), ny = Math.Clamp(observerTileY, Y, bottom);
         double dx = observerTileX - nx, dy = observerTileY - ny;
         if (dx * dx + dy * dy > LocalObservationDistanceTiles * LocalObservationDistanceTiles)
-            throw new ArgumentException($"site矩形距小星超过{LocalObservationDistanceTiles}格；请先靠近实际区域再勘察。");
+            throw new ArgumentException($"site矩形距队友超过{LocalObservationDistanceTiles}格；请先靠近实际区域再勘察。");
     }
 
     public static ConstructionSiteRequest Parse(string query, int? x = null, int? y = null)

@@ -15,6 +15,15 @@ public partial class AITeammateSystem
     private GameTime? launcherTime;
 
     internal bool CanUseCompanionControls => worldReady && !Main.gameMenu && Main.netMode == NetmodeID.SinglePlayer;
+    internal static string CompanionDisplayName => CompanionIdentity.NormalizeName(ModContent.GetInstance<AIConfig>().CompanionName);
+    internal static string CompanionSpeech(string message) => $"{CompanionDisplayName}：{message}";
+
+    internal void RefreshCompanionName(string name)
+    {
+        if (worldReady && CompanionNpc is { } companion)
+            companion.GivenName = name;
+        companionLauncher = null;
+    }
 
     internal string ModelChatStatus => CompanionControlsUI.Text(!ModContent.GetInstance<AIConfig>().UseLlm
         ? "ModelOff" : GetLlmSettings() == null ? "ModelUnconfigured" : "ModelConfigured");

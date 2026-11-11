@@ -58,7 +58,7 @@ public sealed class CompanionBoundYoyo : GlobalProjectile
         projectile.GetGlobalProjectile<CompanionProjectileTag>().FromCompanion = true;
         use.Start(weapon, CompanionUseKind.Yoyo, weapon.useAnimation, aim);
         if (!Attach(projectile, owner, enemy, weapon, use))
-        { projectile.Kill(); error = "悠悠球未能绑定到小星。"; return false; }
+        { projectile.Kill(); error = "悠悠球未能绑定到队友。"; return false; }
         launched = true;
         return true;
     }

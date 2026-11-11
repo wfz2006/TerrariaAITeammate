@@ -18,8 +18,8 @@ public partial class AITeammateSystem
         if (!string.IsNullOrWhiteSpace(plan.Remember)) Memory.Remember(plan.Remember);
         if (string.IsNullOrWhiteSpace(plan.Reply)) return;
         LastReply = plan.Reply;
-        Main.NewText($"小星：{plan.Reply}{(suffix == null ? "" : " " + suffix)}", Color.LightGreen);
-        Memory.Add($"小星：{plan.Reply}");
+        Main.NewText(CompanionSpeech(plan.Reply) + (suffix == null ? "" : " " + suffix), Color.LightGreen);
+        Memory.Add(CompanionSpeech(plan.Reply));
     }
 
     private void RecordPausedInspection(AIPlan task, NPC observer)

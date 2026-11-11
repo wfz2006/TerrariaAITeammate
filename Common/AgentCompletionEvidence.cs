@@ -27,7 +27,7 @@ public static class AgentCompletionEvidence
                     {
                         int actual = snapshot.Inventory.TryGetValue(condition.ItemId!.Value, out int n) ? n : 0;
                         met = actual >= condition.Count;
-                        detail = $"小星实际库存{actual}，要求至少{condition.Count}。";
+                        detail = $"队友实际库存{actual}，要求至少{condition.Count}。";
                     }
                     break;
                 case "near_player":

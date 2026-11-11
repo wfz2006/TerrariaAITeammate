@@ -11,7 +11,6 @@ public enum CompanionChatMode
 
 internal static class PlayerChatInput
 {
-    private static readonly string[] Addresses = { "@小星", "＠小星", "@Xiaoxing", "＠Xiaoxing", "小星" };
     private const int MaxMessageLength = 300;
 
     public static bool IsPlayerMessage(string? message)
@@ -21,28 +20,38 @@ internal static class PlayerChatInput
     }
 
     // Null leaves the line in Terraria chat. An empty addressed line opens the help hint.
-    public static string? Route(string? message, CompanionChatMode mode, bool explicitResume = false)
+    public static string? Route(string? message, CompanionChatMode mode, bool explicitResume = false,
+        string? companionName = null)
     {
         string text = message?.Trim() ?? "";
         if (text.Length == 0 || text[0] == '/' || mode == CompanionChatMode.CommandsOnly)
             return null;
 
-        if (text == "小星来") return "过来";
-
-        foreach (string address in Addresses)
-        {
-            if (!text.StartsWith(address, StringComparison.OrdinalIgnoreCase))
-                continue;
-            if (text.Length == address.Length) return "";
-            if (!IsAddressSeparator(text[address.Length])) continue;
-
-            int start = address.Length;
-            while (start < text.Length && IsAddressSeparator(text[start])) start++;
-            return text[start..];
-        }
+        int offset = text[0] is '@' or '＠' ? 1 : 0;
+        string name = CompanionIdentity.NormalizeName(companionName);
+        string? body = ReadAddress(text, offset, name) ?? ReadAddress(text, offset, "小星");
+        if (body == null && offset != 0)
+            body = ReadAddress(text, offset, "Xiaoxing");
+        if (body == "" && IsPlayerMessage(text) && BasicCompanionCommand.TryParseChat(text, out _))
+            return text;
+        if (body != null)
+            return body;
 
         return IsPlayerMessage(text) && (mode == CompanionChatMode.All ||
             explicitResume || BasicCompanionCommand.TryParseChat(text, out _)) ? text : null;
+    }
+
+    private static string? ReadAddress(string text, int offset, string name)
+    {
+        if (!text.AsSpan(offset).StartsWith(name, StringComparison.OrdinalIgnoreCase))
+            return null;
+
+        int start = offset + name.Length;
+        if (start == text.Length) return "";
+        if (offset == 0 && text.AsSpan(start).SequenceEqual("来")) return "过来";
+        if (!IsAddressSeparator(text[start])) return null;
+        while (start < text.Length && IsAddressSeparator(text[start])) start++;
+        return text[start..];
     }
 
     private static bool IsAddressSeparator(char value)

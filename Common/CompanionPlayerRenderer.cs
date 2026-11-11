@@ -40,7 +40,7 @@ public sealed class CompanionPlayerRenderer
     public CompanionPlayerRenderer()
     {
         visual.Male = false;
-        visual.name = "小星（仅渲染）";
+        visual.name = "AI 队友（仅渲染）";
         visual.hair = 0;
         visual.hairColor = new Color(91, 160, 218);
         visual.eyeColor = new Color(49, 112, 185);

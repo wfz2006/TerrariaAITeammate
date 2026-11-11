@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -32,7 +33,7 @@ internal sealed class CompanionControlsUI(AITeammateSystem system, bool inventor
         panel.SetPadding(14f);
         Append(panel);
 
-        AddLabel(panel, Text("Title"), 1.2f, 0f, Color.White);
+        AddLabel(panel, AITeammateSystem.CompanionDisplayName, 1.2f, 0f, Color.White);
         var close = CreateButton("Close", ButtonColor, IngameFancyUI.Close);
         close.HAlign = 1f;
         close.Width.Set(32f, 0f);
@@ -86,9 +87,9 @@ internal sealed class CompanionControlsUI(AITeammateSystem system, bool inventor
         return button;
     }
 
-    internal static UITextPanel<string> CreateButton(string key, Color color, Action action)
+    internal static UITextPanel<string> CreateButton(string key, Color color, Action action, params object[] args)
     {
-        var button = new UITextPanel<string>(Text(key), 0.9f) { BackgroundColor = color, BorderColor = BorderColor };
+        var button = new UITextPanel<string>(Text(key, args), 0.9f) { BackgroundColor = color, BorderColor = BorderColor };
         button.SetPadding(0f);
         button.OnMouseOver += (_, _) => button.BackgroundColor = Color.Lerp(color, Color.White, 0.16f);
         button.OnMouseOut += (_, _) => button.BackgroundColor = color;
@@ -110,7 +111,7 @@ internal sealed class CompanionControlsUI(AITeammateSystem system, bool inventor
     {
         IngameFancyUI.Close();
         if (system.CompanionNpc == null) system.SpawnCompanion(Main.LocalPlayer);
-        else Main.NewText(Text("AlreadyPresent"), Color.LightBlue);
+        else Main.NewText(Text("AlreadyPresent", AITeammateSystem.CompanionDisplayName), Color.LightBlue);
     }
 
     private void Run(AIActionType action, string target = "")
@@ -124,11 +125,12 @@ internal sealed class CompanionLauncherUI(AITeammateSystem system) : UIState
 {
     public override void OnInitialize()
     {
-        var launcher = CompanionControlsUI.CreateButton("Title", new Color(39, 57, 96), system.OpenCompanionPanel);
+        string name = AITeammateSystem.CompanionDisplayName;
+        var launcher = CompanionControlsUI.CreateButton("Title", new Color(39, 57, 96), system.OpenCompanionPanel, name);
         launcher.HAlign = launcher.VAlign = 1f;
         launcher.Left.Set(-16f, 0f);
         launcher.Top.Set(-24f, 0f);
-        launcher.Width.Set(98f, 0f);
+        launcher.Width.Set(Math.Max(98f, FontAssets.MouseText.Value.MeasureString(name).X * 0.9f + 20f), 0f);
         launcher.Height.Set(32f, 0f);
         Append(launcher);
     }
@@ -143,9 +145,10 @@ public sealed class CompanionControlsPlayer : ModPlayer
             return;
 
         var keys = AITeammateSystem.PanelKeybind?.GetAssignedKeys(InputMode.Keyboard);
+        string name = AITeammateSystem.CompanionDisplayName;
         string tip = keys is { Count: > 0 }
-            ? CompanionControlsUI.Text("JoinTip", string.Join(" / ", keys))
-            : CompanionControlsUI.Text("JoinTipUnbound");
+            ? CompanionControlsUI.Text("JoinTip", name, string.Join(" / ", keys))
+            : CompanionControlsUI.Text("JoinTipUnbound", name);
         Main.NewText(tip, new Color(174, 218, 252));
     }
 

@@ -35,7 +35,7 @@ internal static class ChatHook
             {
                 system.RecordTestChatFailure();
                 system.Mod.Logger.Warn($"Companion chat dispatch failed ({error.GetType().Name}).");
-                Main.NewText(CompanionControlsUI.Text("ChatDispatchError"), Color.OrangeRed);
+                Main.NewText(CompanionControlsUI.Text("ChatDispatchError", AITeammateSystem.CompanionDisplayName), Color.OrangeRed);
             }
         }
 

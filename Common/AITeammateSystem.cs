@@ -1949,7 +1949,7 @@ public partial class AITeammateSystem : ModSystem
         bool explicitResume = (restoredGoalAwaitingContinue || (Executor.HoldPosition && activeGoal.Length > 0)) &&
             GoalResumeCheckpoint.IsExplicitContinue(message);
         AIConfig config = ModContent.GetInstance<AIConfig>();
-        string? body = PlayerChatInput.Route(message, config.ChatMode, explicitResume);
+        string? body = PlayerChatInput.Route(message, config.ChatMode, explicitResume, config.CompanionName);
         if (body == null) return false;
 
         SendCompanionChat(Main.LocalPlayer, body);
@@ -1961,12 +1961,12 @@ public partial class AITeammateSystem : ModSystem
         if (!CanUseCompanionControls) return;
         if (!PlayerChatInput.IsPlayerMessage(message))
         {
-            Main.NewText(CompanionControlsUI.Text("ChatUsage"), Color.Yellow);
+            Main.NewText(CompanionControlsUI.Text("ChatUsage", CompanionDisplayName), Color.Yellow);
             return;
         }
 
         message = message.Trim();
-        Main.NewText(CompanionControlsUI.Text("ChatSent", message), new Color(174, 218, 252));
+        Main.NewText(CompanionControlsUI.Text("ChatSent", CompanionDisplayName, message), new Color(174, 218, 252));
         HandlePlayerMessage(player, message, fromChat: true);
     }
 
@@ -1987,7 +1987,7 @@ public partial class AITeammateSystem : ModSystem
         }
         lastCommandAt = DateTime.MinValue;
         lastAutoPlanAt = DateTime.MinValue;
-        Main.NewText(enabled ? "小星：自主模式开了。" : "小星：自主模式关了。", Color.LightGreen);
+        Main.NewText(CompanionSpeech(enabled ? "自主模式开了。" : "自主模式关了。"), Color.LightGreen);
         TestLog("auto mode " + enabled);
     }
 
@@ -2048,7 +2048,7 @@ public partial class AITeammateSystem : ModSystem
         {
             existing.Center = player.Center + new Vector2(-80f * player.direction, 0f);
             existing.velocity = Vector2.Zero;
-            Main.NewText("小星已经在了。", Color.LightGreen);
+            Main.NewText(CompanionControlsUI.Text("AlreadyPresent", CompanionDisplayName), Color.LightGreen);
             return;
         }
 
@@ -2062,11 +2062,11 @@ public partial class AITeammateSystem : ModSystem
             return null;
 
         NPC npc = Main.npc[index];
-        npc.GivenName = "小星";
+        npc.GivenName = CompanionDisplayName;
         npc.Center = center;
         npc.velocity = Vector2.Zero;
-        Memory.Add("你召唤了小星。");
-        Main.NewText("小星来了。", Color.LightGreen);
+        Memory.Add($"你召唤了{CompanionDisplayName}。");
+        Main.NewText(CompanionControlsUI.Text("Summoned", CompanionDisplayName), Color.LightGreen);
         return npc;
     }
 
@@ -2077,7 +2077,7 @@ public partial class AITeammateSystem : ModSystem
         autoMode = false;
         ClearActiveGoal();
         Executor.Clear(true);
-        Main.NewText("小星：好，停了。", Color.LightGreen);
+        Main.NewText(CompanionSpeech("好，停了。"), Color.LightGreen);
     }
 
     public void OnPlayerHurt(PlayerDeathReason source)
@@ -2129,7 +2129,7 @@ public partial class AITeammateSystem : ModSystem
         string auto = autoMode ? "自主" : "手动";
         string facts = string.IsNullOrWhiteSpace(Memory.FactsSnapshot()) ? "0条" : $"{Memory.FactsSnapshot().Split('\n').Length}条";
         string resume = restoredGoalAwaitingContinue ? $" · 已恢复目标：{activeGoal}（暂停，输入“继续”重新核对现场）" : "";
-        return $"小星：{who} · 任务：{Executor.StatusText()} · 背包：{Executor.InventorySummary()} · 记忆：{facts} · 模式：{auto} · API：{api}{resume}";
+        return CompanionSpeech($"{who} · 任务：{Executor.StatusText()} · 背包：{Executor.InventorySummary()} · 记忆：{facts} · 模式：{auto} · API：{api}{resume}");
     }
 
     public void GiveInventory(Player player) => Executor.GiveInventory(player);

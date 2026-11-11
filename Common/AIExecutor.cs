@@ -725,12 +725,12 @@ public partial class AIExecutor
     {
         if (AITeammateSystem.Instance.Loadout.Inventory.All(item => item.IsAir))
         {
-            Main.NewText("小星：背包是空的。", Color.LightBlue);
+            Main.NewText(AITeammateSystem.CompanionSpeech("背包是空的。"), Color.LightBlue);
             return;
         }
 
         AITeammateSystem.Instance.Loadout.GiveAll(player);
-        Main.NewText("小星：都给你了。", Color.LightGreen);
+        Main.NewText(AITeammateSystem.CompanionSpeech("都给你了。"), Color.LightGreen);
     }
 
     public void Tick(NPC npc)
@@ -1215,7 +1215,7 @@ public partial class AIExecutor
                 weaponWarned = true;
                 if (temporary)
                 {
-                    Main.NewText($"小星：{result.Message}", Color.LightGreen);
+                    Main.NewText(AITeammateSystem.CompanionSpeech(result.Message), Color.LightGreen);
                     AITeammateSystem.Instance.TestLog("auto defend weapon: " + result.Message);
                 }
                 else
@@ -1631,7 +1631,7 @@ public partial class AIExecutor
         NPC? companion = AITeammateSystem.Instance.CompanionNpc;
         if (companion == null)
         {
-            message = "小星不在。";
+            message = $"{AITeammateSystem.CompanionDisplayName}不在。";
             return false;
         }
 
@@ -1710,7 +1710,7 @@ public partial class AIExecutor
         retreatTicks = 0;
         InvalidateRoutePath();
         sequenceActive = pendingPlans.Count > 0;
-        message = "小星：先撤！";
+        message = AITeammateSystem.CompanionSpeech("先撤！");
         Main.NewText(message, Color.Orange);
         AITeammateSystem.Instance.Mod.Logger.Info("[AITEST] combat retreat");
         return true;
@@ -3338,7 +3338,7 @@ public partial class AIExecutor
             reachability = "not_tested", builderStand = "not_tested", nativePlacement = "not_tested", nativeHousing = "not_tested",
             structurePreserved = "not_tested", newHousing = "not_tested",
             worldModified = false, inventoryModified = false, actorsMoved = false, constructionExecuted = false,
-            note = "模板尺寸与成本不是原屋测量。这里只读列出与现有build相同的有界候选，不选择或执行任务、不找路、不批准拆旧屋。geometryStatus独立保留几何事实；当前合同含structure_preserved时，整10×7区域必须有同一目标原mask完整覆盖且无保护命中，unknown不能当safe。原mask不会因本目标施工重拍，mask查询不证明全目标保留、原生施工/住房/新房或外部通路已通过。缺料只看小星背包；即使本次无候选也保留缺额。已有施工的实际剩余材料应看施工进度/失败回执。"
+            note = "模板尺寸与成本不是原屋测量。这里只读列出与现有build相同的有界候选，不选择或执行任务、不找路、不批准拆旧屋。geometryStatus独立保留几何事实；当前合同含structure_preserved时，整10×7区域必须有同一目标原mask完整覆盖且无保护命中，unknown不能当safe。原mask不会因本目标施工重拍，mask查询不证明全目标保留、原生施工/住房/新房或外部通路已通过。缺料只看队友背包；即使本次无候选也保留缺额。已有施工的实际剩余材料应看施工进度/失败回执。"
         };
     }
 
@@ -4674,7 +4674,7 @@ public partial class AIExecutor
     private void FinishTask(string text)
     {
         string display = ActionFeedbackDisplay.Summarize(text, action == AIActionType.Inspect);
-        Main.NewText($"小星：{display}", Color.LightGreen);
+        Main.NewText(AITeammateSystem.CompanionSpeech(display), Color.LightGreen);
         AITeammateSystem.Instance.TestLog(text);
     }
 

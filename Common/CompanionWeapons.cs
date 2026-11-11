@@ -119,7 +119,7 @@ public static class CompanionWeapons
             if (!CompanionBoundShortsword.Attach(stab, npc, animation))
             {
                 stab.Kill();
-                return new WeaponUseResult(false, 30, "短剑刺击未能绑定到小星。");
+                return new WeaponUseResult(false, 30, "短剑刺击未能绑定到队友。");
             }
             if (weapon.UseSound.HasValue) SoundEngine.PlaySound(weapon.UseSound, npc.Center);
             // Damage comes from the real stab projectile, never a second generic strike.

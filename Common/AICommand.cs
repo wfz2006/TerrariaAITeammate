@@ -75,7 +75,7 @@ public class AICommand : ModCommand
                 break;
             case "inventory":
                 system.ToggleInventory();
-                caller.Reply("小星的背包已切换。", Color.LightBlue);
+                caller.Reply(CompanionControlsUI.Text("InventorySwitched", AITeammateSystem.CompanionDisplayName), Color.LightBlue);
                 break;
             case "tasks":
                 caller.Reply(system.TaskText(), Color.LightBlue);

@@ -280,8 +280,8 @@ public partial class AITeammateSystem
             Memory.Add($"玩家说：{message}");
             if (!fromChat) Main.NewText($"你：{message}", Color.White);
             LastReply = CompanionControlsUI.Text(ModContent.GetInstance<AIConfig>().UseLlm ? "MissingKey" : "ModelDisabled");
-            Main.NewText("小星：" + LastReply, Color.LightBlue);
-            Memory.Add("小星：" + LastReply);
+            Main.NewText(CompanionSpeech(LastReply), Color.LightBlue);
+            Memory.Add(CompanionSpeech(LastReply));
             return;
         }
 
@@ -295,7 +295,7 @@ public partial class AITeammateSystem
         pendingCommand = message;
         StartPrimaryDecision("chat", message);
         if (primaryCancellation != null)
-            Main.NewText(CompanionControlsUI.Text("Thinking"), Color.LightBlue);
+            Main.NewText(CompanionControlsUI.Text("Thinking", CompanionDisplayName), Color.LightBlue);
     }
 
     internal void OnModelConfigChanged(bool connectionChanged, bool useCombatLlm)
@@ -442,7 +442,7 @@ public partial class AITeammateSystem
                         Executor.ClearBossReview();
                         nextDecisionAt = DateTime.UtcNow.AddSeconds(2);
                         Mod.Logger.Warn($"[AIAGENT] decision output_limit kind={kind} automaticRetry=false; goal retained.");
-                        Main.NewText("小星：这次思考超出额度，目标已保留，暂不重复请求。", Color.OrangeRed);
+                        Main.NewText(CompanionSpeech("这次思考超出额度，目标已保留，暂不重复请求。"), Color.OrangeRed);
                         return;
                     }
                     if (terminalApiFailure)
@@ -452,7 +452,7 @@ public partial class AITeammateSystem
                         nextDecisionAt = DateTime.UtcNow.AddSeconds(30);
                         int status = plannerApiFailures.LastFailure!.httpStatus;
                         Mod.Logger.Warn($"[AIAGENT] decision terminal_api HTTP={status} kind={kind} automaticRetry=false; goal retained.");
-                        Main.NewText($"小星：请求被服务端拒绝（HTTP {status}），目标已保留。处理账户或配置后再让我继续。", Color.OrangeRed);
+                        Main.NewText(CompanionSpeech($"请求被服务端拒绝（HTTP {status}），目标已保留。处理账户或配置后再让我继续。"), Color.OrangeRed);
                         return;
                     }
                     int delay = Math.Min(60, 1 << Math.Min(decisionFailures, 6));
@@ -460,8 +460,8 @@ public partial class AITeammateSystem
                     Mod.Logger.Warn($"[AIAGENT] decision failed kind={kind} " +
                         (kind == "paused_answer" ? "automaticRetry=false" : $"retryIn={delay}s") + $": {exception.Message}");
                     if (decisionFailures == 1)
-                        Main.NewText(kind == "paused_answer" ? "小星：这次只读回答没有成功，仍保持暂停，不会重复请求。" :
-                            "小星：这次思考没有成功，我稍后重新判断。", Color.OrangeRed);
+                        Main.NewText(CompanionSpeech(kind == "paused_answer" ? "这次只读回答没有成功，仍保持暂停，不会重复请求。" :
+                            "这次思考没有成功，我稍后重新判断。"), Color.OrangeRed);
                 });
             }
         });
@@ -611,8 +611,8 @@ public partial class AITeammateSystem
             pendingCommand = null;
             lastGoalResult += " 自动纠正预算已用完，目标和进度保留；等待新的玩家指令后再尝试。";
             LastReply = "规划校验连续未通过，目标与进度已保留，暂缓自动请求；可以用新指令继续。";
-            Main.NewText("小星：" + LastReply, Color.LightBlue);
-            Memory.Add("小星：" + LastReply);
+            Main.NewText(CompanionSpeech(LastReply), Color.LightBlue);
+            Memory.Add(CompanionSpeech(LastReply));
         }
     }
 
@@ -665,8 +665,8 @@ public partial class AITeammateSystem
             if (!string.IsNullOrWhiteSpace(plan.Reply))
             {
                 LastReply = plan.Reply;
-                Main.NewText($"小星：{plan.Reply}{(suffix == null ? "" : " " + suffix)}", Color.LightGreen);
-                Memory.Add($"小星：{plan.Reply}");
+                Main.NewText(CompanionSpeech(plan.Reply) + (suffix == null ? "" : " " + suffix), Color.LightGreen);
+                Memory.Add(CompanionSpeech(plan.Reply));
             }
             return Receipt("accepted", "cancelled", "Goal and queue were cancelled explicitly.");
         }
@@ -700,8 +700,8 @@ public partial class AITeammateSystem
                 if (!string.IsNullOrWhiteSpace(plan.Reply))
                 {
                     LastReply = plan.Reply;
-                    Main.NewText($"小星：{plan.Reply}{(suffix == null ? "" : " " + suffix)}", Color.LightGreen);
-                    Memory.Add($"小星：{plan.Reply}");
+                    Main.NewText(CompanionSpeech(plan.Reply) + (suffix == null ? "" : " " + suffix), Color.LightGreen);
+                    Memory.Add(CompanionSpeech(plan.Reply));
                 }
                 // A chat may need one more observation-informed answer. This is
                 // still the player's question, never a resumption of the goal.
@@ -766,8 +766,8 @@ public partial class AITeammateSystem
         if (!string.IsNullOrWhiteSpace(plan.Reply) && (!claimsCompletion || completionVerified))
         {
             LastReply = plan.Reply;
-            Main.NewText($"小星：{plan.Reply}{(suffix == null ? "" : " " + suffix)}", Color.LightGreen);
-            Memory.Add($"小星：{plan.Reply}");
+            Main.NewText(CompanionSpeech(plan.Reply) + (suffix == null ? "" : " " + suffix), Color.LightGreen);
+            Memory.Add(CompanionSpeech(plan.Reply));
         }
 
         if (claimsCompletion)

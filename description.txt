@@ -1,5 +1,5 @@
-Xiaoxing is an AI teammate for single-player Terraria. Follow, attack, pick up items, and equip gear using local commands. Connect an LLM to give natural-language instructions and plan multi-step tasks.
+小鲸鱼 is an AI teammate for single-player Terraria. Follow, attack, pick up items, and equip gear using local commands. Connect an LLM to give natural-language instructions and plan multi-step tasks.
 
-Click Xiaoxing in the lower-right corner, press O, or enter /ai panel for inventory, settings, and quick commands. Talk to your teammate by starting a message with @Xiaoxing in Terraria's chat box.
+Click your teammate's name in the lower-right corner, press O, or enter /ai panel for inventory, settings, and quick commands. Set a name under Teammate name and use it to address your teammate in Terraria's chat box.
 
-小星是单人泰拉瑞亚的 AI 队友。在游戏聊天框输入「小星，」后直接说话。点击右下角的小星、按 O 或输入 /ai panel 打开面板管理背包、配置模型和使用基础指令。跟随、攻击、拾取和装备支持离线使用。
+小鲸鱼是单人泰拉瑞亚的 AI 队友。在游戏聊天框输入「小鲸鱼，」后直接说话。点击右下角的队友名字、按 O 或输入 /ai panel 打开面板。可以在设置里改名、配置模型，也可以直接使用跟随、攻击和拾取等离线指令。

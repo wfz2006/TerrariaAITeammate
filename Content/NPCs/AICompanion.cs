@@ -62,6 +62,6 @@ public class AICompanion : ModNPC
     {
         Common.AITeammateSystem.Instance.RecordNaturalBossActorDeath(NPC);
         Common.AITeammateSystem.Instance.RecordComplexCompanionDeath(NPC);
-        Main.NewText("小星倒下了。", Color.OrangeRed);
+        Main.NewText(Common.CompanionControlsUI.Text("Fallen", Common.AITeammateSystem.CompanionDisplayName), Color.OrangeRed);
     }
 }
