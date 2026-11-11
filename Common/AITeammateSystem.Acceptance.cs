@@ -237,11 +237,7 @@ public partial class AITeammateSystem
         }
         SaveAgentAcceptance(run, physicallyComplete, building);
         if (run.Finished)
-        {
             TestLog($"agent acceptance result={run.Status} steps={run.Steps.Count} house={physicallyComplete} error={run.Error}");
-            Main.NewText($"[TEST] AI 玩家验收：{run.Status}，步骤 {run.Steps.Count}，实体住房 {physicallyComplete}",
-                run.Status == "passed" ? Color.LightGreen : Color.OrangeRed);
-        }
     }
 
     private static (int Left, int Top, string Material, bool RoomValid)? FindAgentAcceptanceBuilding(AgentAcceptanceRun run)

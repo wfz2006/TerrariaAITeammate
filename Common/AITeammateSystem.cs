@@ -1762,12 +1762,7 @@ public partial class AITeammateSystem : ModSystem
         Enqueue(() => TestLog("autotest done"));
     }
 
-    public void TestLog(string message)
-    {
-        Mod.Logger.Info("[AITEST] " + message);
-        if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AITEAMMATE_AUTOTEST")))
-            Main.NewText("[TEST] " + (message.Length <= 240 ? message : message[..240] + "…（完整记录见日志）"), Color.Yellow);
-    }
+    public void TestLog(string message) => Mod.Logger.Info("[AITEST] " + message);
 
     public override void PostUpdateEverything()
     {

@@ -153,7 +153,6 @@ public partial class AITeammateSystem
             run.Status = run.Cases.Count == 3 && run.Cases.All(test => test.Status == "passed") ? "passed" : "failed";
             SaveComplexAcceptance(run);
             TestLog($"complex acceptance {run.Status}: passed={run.Cases.Count(test => test.Status == "passed")}/3");
-            Main.NewText($"[TEST] 复杂真实验收：{run.Status}，通过 {run.Cases.Count(test => test.Status == "passed")}/3", Color.LightGreen);
             finished.TrySetResult(true);
         });
         await Task.WhenAny(finished.Task, Task.Delay(15000)).ConfigureAwait(false);

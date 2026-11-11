@@ -1,5 +1,5 @@
 displayName = AI Teammate
 author = wfz
-version = 0.2.10
+version = 0.2.11
 side = Both
 buildIgnore = tests/*, Tests/*, docs/*, Art/*, Content/Skins/SharkMaid/Preview*.png
