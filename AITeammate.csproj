@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>TerrariaAITeammate</AssemblyName>
+    <RootNamespace>TerrariaAITeammate</RootNamespace>
+    <PathMap Condition="'$(PathMap)' == ''">$(MSBuildProjectDirectory)=/_/TerrariaAITeammate</PathMap>
+    <TmlTargets Condition="'$(tModLoaderPath)' != ''">$(tModLoaderPath)/tMLMod.targets</TmlTargets>
+    <TmlTargets Condition="'$(tModLoaderPath)' == ''">$(MSBuildProjectDirectory)/../tModLoader.targets</TmlTargets>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests/**/*.cs;Tests/**/*.cs" />
+  </ItemGroup>
+
+  <Import Project="$(TmlTargets)" Condition="Exists('$(TmlTargets)')" />
+
+  <Target Name="RequireTmlTargets" BeforeTargets="PrepareForBuild" Condition="!Exists('$(TmlTargets)')">
+    <Error Text="Set tModLoaderPath to the tModLoader installation directory containing tMLMod.targets." />
+  </Target>
+</Project>

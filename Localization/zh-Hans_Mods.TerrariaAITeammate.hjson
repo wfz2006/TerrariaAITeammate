@@ -1,0 +1,164 @@
+NPCs.AICompanion.DisplayName: 小星
+Projectiles.AIBolt.DisplayName: 小星的魔法弹
+Keybinds.CompanionPanel.DisplayName: 打开小星面板
+
+Controls: {
+	Title: 小星
+	Close: ×
+	Inventory: 背包
+	Settings: 设置
+	BasicCommands: 基础指令
+	Summon: 召唤
+	Follow: 跟随
+	Come: 过来
+	Attack: 攻击
+	Pickup: 拾取
+	Stop: 停止
+	NotSummoned: 未召唤
+	Present: 已召唤
+	ModelOff: LLM 已关闭
+	ModelUnconfigured: 待配置 API 密钥
+	ModelConfigured: LLM 已配置
+	PanelStatus: "{0}  ·  {1}"
+	AlreadyPresent: 小星已经在了。
+	JoinTip: "点击右下角的小星、按 {0} 或输入 /ai panel，打开小星面板。"
+	JoinTipUnbound: "点击右下角的小星或输入 /ai panel，打开小星面板。"
+	ChatSent: "你 → 小星：{0}"
+	ChatUsage: "请在游戏聊天框输入「小星，」或 /ai 后接消息，最多 300 字符。"
+	ChatDispatchError: 小星没能处理这条消息，请重试。
+	CommandUsage: "/ai panel 面板 | settings 设置 | spawn 召唤 | follow 跟随 | come 过来 | stop 停下 | attack [目标] | pickup [物品] [数量] | equip <物品> | inventory 背包 | status 状态 | auto on/off | diagnostics 测试记录 | bug [描述] | /ai <消息>"
+	MissingKey: "自然语言聊天需要 LLM 密钥。请在 /ai settings 配置。跟随、过来和停下仍可用。"
+	ModelDisabled: "LLM 已关闭。可在 /ai settings 启用自然语言聊天。跟随、过来和停下仍可用。"
+	Thinking: 小星正在思考…
+	SettingsChanged: LLM 设置已更改，请重新发送刚才还在处理的消息。
+	Diagnostics: 测试记录
+	DiagnosticsStatus: "{0}  ·  本次启动已记录 {1} 条"
+	DiagnosticsActive: 正在记录
+	DiagnosticsInactive: 记录已关闭
+	DiagnosticsStart: 开始记录
+	DiagnosticsStop: 停止记录
+	DiagnosticsBug: 标记 Bug
+	DiagnosticsExport: 导出 JSON
+	DiagnosticsBack: 返回
+	DiagnosticsLocal: 测试记录保存在本机。
+	DiagnosticsNote: "在游戏聊天框输入 /ai bug <描述> 添加说明。"
+	DiagnosticsBugSaved: 已标记 Bug。
+	DiagnosticsExported: "测试记录已导出到 {0}"
+	DiagnosticsWriteError: 无法保存测试记录。
+	DiagnosticsExportError: 无法导出测试记录。
+}
+
+Configs: {
+	AIConfig: {
+		DisplayName: 小星设置
+
+		Headers: {
+			ModelConnection: 模型连接
+			Interaction: 聊天与战斗
+			ModelParameters: 模型参数
+			AssistanceAndDebug: 辅助与调试
+		}
+
+		ChatMode: {
+			Label: 聊天接收方式
+			Tooltip: "选择游戏聊天中的哪些消息会发给小星。"
+		}
+
+		UseLlm: {
+			Label: 启用模型
+			Tooltip: "让小星通过模型理解自然语言、回答问题和规划任务。"
+		}
+
+		ApiKey: {
+			Label: API 密钥
+			Tooltip: "填入模型服务的 API 密钥。已通过环境变量或本地密钥文件配置时可留空。"
+		}
+
+		BaseUrl: {
+			Label: API 地址
+			Tooltip: "填入服务商的 API 根地址。默认使用 DeepSeek 的 https://api.deepseek.com。"
+		}
+
+		Model: {
+			Label: 模型名称
+			Tooltip: "填写服务商提供的模型 ID，默认 deepseek-flash。"
+		}
+
+		UseCombatLlm: {
+			Label: 战斗时请求模型
+			Tooltip: "在战斗中允许小星额外请求模型判断局势。这些请求计入 API 用量。"
+		}
+
+		ThinkingMode: {
+			Label: 思考模式
+			Tooltip: "选择模型的思考模式。「服务商默认」由模型服务决定。"
+		}
+
+		ReasoningEffort: {
+			Label: 推理强度
+			Tooltip: "设置模型的推理强度。关闭思考时跳过此设置。"
+		}
+
+		UsePhysicsStructureView: {
+			Label: 发送建筑详图
+			Tooltip: "在规划请求中加入更细的建筑结构数据，会增加输入 Token。"
+		}
+
+		UseStructureOverview: {
+			Label: 发送建筑概览
+			Tooltip: "在规划请求中加入附近建筑的结构概览。"
+		}
+
+		AllowTeleportRecovery: {
+			Label: 受阻时传送脱困
+			Tooltip: "允许小星在通行受阻时传送脱困。默认关闭。"
+		}
+
+		AllowBlueprintWorldEditing: {
+			Label: 蓝图直接编辑世界
+			Tooltip: "允许按已保存的蓝图清理区域并恢复瓦片。材料来自小星的背包。"
+		}
+
+		MaxResponseTokens: {
+			Label: 单次输出上限
+			Tooltip: "每次模型回复的 Token 上限，默认 8192。加减按钮每次调整 256，也可以直接输入数值。"
+		}
+
+		DebugLog: {
+			Label: 详细调试日志
+			Tooltip: "记录更多模型回包和规划过程，便于排查问题。"
+		}
+	}
+
+	CompanionChatMode: {
+		Tooltip: ""
+		Addressed: {
+			Label: 称呼和快捷指令
+			Tooltip: "接收 @小星 或以「小星，」开头的消息、独立快捷指令和暂停任务的继续指令。"
+		}
+		CommandsOnly: {
+			Label: 仅 /ai 指令
+			Tooltip: "在游戏聊天框输入 /ai 后接指令或消息。"
+		}
+		All: {
+			Label: 全部聊天
+			Tooltip: "普通聊天也会交给小星，可能增加模型请求。"
+		}
+	}
+
+	LlmThinkingMode: {
+		Tooltip: ""
+		ProviderDefault.Label: 服务商默认
+		Enabled.Label: 开启
+		Disabled.Label: 关闭
+	}
+
+	LlmReasoningEffort: {
+		Tooltip: ""
+		ProviderDefault.Label: 服务商默认
+		Low.Label: 低
+		High.Label: 高
+	}
+}
+
+Items.BlueprintWand.DisplayName: 蓝图法杖

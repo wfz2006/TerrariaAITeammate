@@ -1,0 +1,196 @@
+NPCs.AICompanion.DisplayName: A I Companion
+Projectiles.AIBolt.DisplayName: A I Bolt
+Keybinds.CompanionPanel.DisplayName: Open Xiaoxing's panel
+
+Controls: {
+	Title: Xiaoxing
+	Close: ×
+	Inventory: Inventory
+	Settings: Settings
+	BasicCommands: Local commands
+	Summon: Summon
+	Follow: Follow
+	Come: Come here
+	Attack: Attack
+	Pickup: Pick up
+	Stop: Stop
+	NotSummoned: Away
+	Present: Present
+	ModelOff: LLM off
+	ModelUnconfigured: API key needed
+	ModelConfigured: LLM configured
+	PanelStatus: "{0}  ·  {1}"
+	AlreadyPresent: Xiaoxing is already here.
+	JoinTip: "Click Xiaoxing in the lower-right corner, press {0}, or use /ai panel."
+	JoinTipUnbound: "Click Xiaoxing in the lower-right corner or use /ai panel."
+	ChatSent: "You → Xiaoxing: {0}"
+	ChatUsage: "Type @Xiaoxing or /ai followed by your message in game chat. Messages can be up to 300 characters."
+	ChatDispatchError: "Xiaoxing could not read that message. Please try again."
+	CommandUsage: "/ai panel | settings | spawn | follow | come | stop | attack [target] | pickup [item] [count] | equip <item> | inventory | status | auto on/off | diagnostics | bug [description] | /ai <message>"
+	MissingKey: "An API key is needed for LLM chat. Open /ai settings to add one. Follow, come and stop still work."
+	ModelDisabled: "LLM chat is off. Enable it in /ai settings for natural language. Follow, come and stop still work."
+	Thinking: "Xiaoxing is thinking…"
+	SettingsChanged: "LLM settings changed. Please resend the message that was being processed."
+	Diagnostics: Test diagnostics
+	DiagnosticsStatus: "{0}  ·  {1} events this launch"
+	DiagnosticsActive: Recording
+	DiagnosticsInactive: Recording off
+	DiagnosticsStart: Start recording
+	DiagnosticsStop: Stop recording
+	DiagnosticsBug: Mark bug
+	DiagnosticsExport: Export JSON
+	DiagnosticsBack: Back
+	DiagnosticsLocal: Records stay on this device.
+	DiagnosticsNote: "In game chat, use /ai bug <description> to add a note."
+	DiagnosticsBugSaved: Bug marked.
+	DiagnosticsExported: "Test diagnostics exported to {0}"
+	DiagnosticsWriteError: Could not save test diagnostics.
+	DiagnosticsExportError: Could not export test diagnostics.
+}
+
+Configs: {
+	AIConfig: {
+		DisplayName: Xiaoxing Settings
+
+		Headers: {
+			ModelConnection: Model connection
+			Interaction: Chat and combat
+			ModelParameters: Model parameters
+			AssistanceAndDebug: Assistance and debugging
+		}
+
+		ChatMode: {
+			Label: Chat routing
+			Tooltip: "Choose which game chat messages go to Xiaoxing."
+		}
+
+		ApiKey: {
+			Label: API key
+			Tooltip: "Enter your provider's API key. Leave this blank if you've set a key through an environment variable or the local key file."
+		}
+
+		BaseUrl: {
+			Label: API base URL
+			Tooltip: "Enter your provider's API base URL. The default is https://api.deepseek.com."
+		}
+
+		Model: {
+			Label: Model ID
+			Tooltip: "Enter the model ID listed by your provider. The default is deepseek-flash."
+		}
+
+		UseLlm: {
+			Label: Enable model
+			Tooltip: "Use the model for natural-language instructions, questions, and task planning."
+		}
+
+		UseCombatLlm: {
+			Label: Model calls during combat
+			Tooltip: "Allow additional model requests during combat. These requests count toward API usage."
+		}
+
+		DebugLog: {
+			Label: Detailed debug log
+			Tooltip: "Log additional model responses and planning details for troubleshooting."
+		}
+
+		MaxResponseTokens: {
+			Label: Output token limit
+			Tooltip: "Maximum output tokens per model response. The default is 8192. The buttons adjust by 256, and you can enter a value directly."
+		}
+
+		ThinkingMode: {
+			Label: Thinking mode
+			Tooltip: "Choose the thinking mode. Provider default lets the model provider decide."
+		}
+
+		ReasoningEffort: {
+			Label: Reasoning effort
+			Tooltip: "Set the model's reasoning effort. This setting is skipped when thinking is off."
+		}
+
+		UsePhysicsStructureView: {
+			Label: Send structure details
+			Tooltip: "Include finer building data in planning requests. This increases input token usage."
+		}
+
+		UseStructureOverview: {
+			Label: Send structure overview
+			Tooltip: "Include an overview of nearby buildings in planning requests."
+		}
+
+		AllowTeleportRecovery: {
+			Label: Teleport when stuck
+			Tooltip: "Allow Xiaoxing to teleport when stuck. Off by default."
+		}
+
+		AllowBlueprintWorldEditing: {
+			Label: Allow direct blueprint edits
+			Tooltip: "Allow saved blueprints to clear regions and restore tiles with materials from Xiaoxing's inventory."
+		}
+	}
+
+	CompanionChatMode: {
+		Tooltip: ""
+
+		Addressed: {
+			Label: Addressed messages
+			Tooltip: "@Xiaoxing messages, exact local shortcuts and a pending goal's resume shortcut."
+		}
+
+		CommandsOnly: {
+			Label: /ai commands only
+			Tooltip: "Type /ai followed by a command or message in game chat."
+		}
+
+		All: {
+			Label: All chat
+			Tooltip: "Forwards ordinary game chat too. This can cause additional model requests."
+		}
+	}
+
+	LlmThinkingMode: {
+		Tooltip: ""
+
+		ProviderDefault: {
+			Label: Provider Default
+			Tooltip: ""
+		}
+
+		Enabled: {
+			Label: Enabled
+			Tooltip: ""
+		}
+
+		Disabled: {
+			Label: Disabled
+			Tooltip: ""
+		}
+	}
+
+	LlmReasoningEffort: {
+		Tooltip: ""
+
+		ProviderDefault: {
+			Label: Provider Default
+			Tooltip: ""
+		}
+
+		Low: {
+			Label: Low
+			Tooltip: ""
+		}
+
+		High: {
+			Label: High
+			Tooltip: ""
+		}
+	}
+}
+
+Items: {
+	BlueprintWand: {
+		DisplayName: Blueprint Wand
+		Tooltip: ""
+	}
+}
